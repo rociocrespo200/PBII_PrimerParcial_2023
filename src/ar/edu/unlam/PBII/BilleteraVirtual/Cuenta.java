@@ -15,19 +15,14 @@ public class Cuenta {
 		prestamo = null;
 	}
 
-	public boolean extraerDineroDeCuenta(Double montoAExtraer) {
-		if(montoAExtraer <= this.saldoPesos) {
-			this.saldoPesos = saldoPesos - montoAExtraer;
-			return true;
-		}
-		return false;
+	public void restarDinero(Double monto) {
+		 saldoPesos -= monto;
 	}
 
-	public void ingresarDineroEnCuenta(Double montoADepositar) {
-		
-		this.saldoPesos = saldoPesos + montoADepositar;
+	public void sumarDinero(Double monto) {
+		 saldoPesos += monto;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}

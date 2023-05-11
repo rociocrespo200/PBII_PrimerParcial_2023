@@ -52,11 +52,17 @@ public class testBilleteraVirtual {
 		Integer id = 1;
 		String nombre = "Rocio";
 		
+		Cuenta cuenta2;
+		Integer id2 = 1;
+		String nombre2 = "Rocio";
+		
 		cuenta = new Cuenta(id,nombre);
+		cuenta2 = new Cuenta(id2,nombre2);
 		
 		actual.agregarCuenta(cuenta);
+		actual.agregarCuenta(cuenta2);
 		
-		assertTrue(actual.agregarCuenta(cuenta));
+		assertEquals(1, actual.cuentas.size());
 	}
 	
 	@Test
@@ -69,9 +75,11 @@ public class testBilleteraVirtual {
 		Double dineroAIngresar = 1000.0;
 		
 		cuenta = new Cuenta(id,nombre);
-		cuenta.ingresarDineroEnCuenta(dineroAIngresar);
+		actual.agregarCuenta(cuenta);
+		Cuenta cuentaBuscada = actual.buscarCuenta(id);
+		actual.ingresarDineroEncuenta(cuentaBuscada, dineroAIngresar);
 		
-		assertEquals(dineroAIngresar, cuenta.getSaldoPesos());
+		assertEquals(dineroAIngresar, cuentaBuscada.getSaldoPesos());
 		
 	}
 	
@@ -81,32 +89,65 @@ public class testBilleteraVirtual {
 		Cuenta cuenta;
 		Integer idOrigen = 1;
 		String nombre = "Rocio";
+		cuenta = new Cuenta(idOrigen,nombre);
 		
 		Double dineroAIngresar = 1000.0;
-		
-		cuenta = new Cuenta(idOrigen,nombre);
-		cuenta.ingresarDineroEnCuenta(dineroAIngresar);
+		actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
 		
 		Cuenta cuentaDestino;
 		Integer idDestino = 4;
 		String nombreDestino = "karen";
-		
-		Double montoTransferir = 500.0;
 		cuentaDestino = new Cuenta(idDestino, nombreDestino);
+		Double montoTransferir = 500.0, montoEsperado = 500.0;
 		
-		actual.transferirDineroAOtraCuenta(montoTransferir, idOrigen, idDestino);
+		actual.agregarCuenta(cuentaDestino);
+		actual.agregarCuenta(cuenta);
+		Cuenta cuentaOrigen = actual.buscarCuenta(1);
+		Cuenta cuentaBuscada = actual.buscarCuenta(4);
 	
-		assertEquals(montoTransferir, cuentaDestino.getSaldoPesos());
-		
+		assertTrue(actual.transferirDineroAOtraCuenta(montoTransferir, 1,4));
+		assertEquals(montoTransferir, cuentaBuscada.getSaldoPesos());
+		assertEquals(montoEsperado, cuentaOrigen.getSaldoPesos());
 	}
 	
 	@Test
 	public void queNoSePuedaTransferirAUnaCuentaInexistente() {
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer idOrigen = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(idOrigen,nombre);
 		
+		Double dineroAIngresar = 1000.0;
+		actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
+		
+		Double montoTransferir = 500.0;
+		
+		actual.agregarCuenta(cuenta);
+		
+		assertFalse(actual.transferirDineroAOtraCuenta(montoTransferir, 1, 4));
 	}
-	
 	@Test
 	public void queNoSePuedaTransferirSiNoHaySuficienteDinero() {
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer idOrigen = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(idOrigen,nombre);
+		
+		Double dineroAIngresar = 400.0;
+		actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
+		
+		Cuenta cuentaDestino;
+		Integer idDestino = 4;
+		String nombreDestino = "karen";
+		cuentaDestino = new Cuenta(idDestino, nombreDestino);
+		Double montoTransferir = 500.0;
+		
+		actual.agregarCuenta(cuentaDestino);
+		actual.agregarCuenta(cuenta);
+		
+		assertFalse(actual.transferirDineroAOtraCuenta(montoTransferir, 1, 4));
 		
 	}
 	
@@ -117,14 +158,18 @@ public class testBilleteraVirtual {
 		Integer id = 1;
 		String nombre = "Rocio";
 		
-		Double dineroAIngresar = 1000.0;
-		
 		cuenta = new Cuenta(id,nombre);
-		cuenta.ingresarDineroEnCuenta(dineroAIngresar);
+		actual.agregarCuenta(cuenta);
+		Double dineroAIngresar = 1000.0;
+		actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
 		
-		Double dineroARetirar = 500.0;
+		Double montoARetirar = 200.0, montoEsperado = 800.0;
+		actual.retirarDinero(id, montoARetirar);
 		
-		assertTrue(cuenta.extraerDineroDeCuenta(dineroARetirar));
+		Cuenta cuentaBuscada= actual.buscarCuenta(id);
+		
+		assertEquals(montoEsperado, cuentaBuscada.getSaldoPesos());
+		
 	}
 	
 	@Test

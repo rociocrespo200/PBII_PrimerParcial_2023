@@ -10,12 +10,9 @@ public class Billetera {
 		cuentas = new HashSet<Cuenta>();
 	}
 
-	public boolean agregarCuenta(Cuenta cuenta) {
-		if(!cuentas.contains(cuenta)) {
+	public void agregarCuenta(Cuenta cuenta) {
 		cuentas.add(cuenta);
-		return true;
-		}
-		return false;
+	
 	}
 
 	public Cuenta buscarCuenta(Integer id) {
@@ -27,15 +24,36 @@ public class Billetera {
 		return null;
 	}
 
-	public void transferirDineroAOtraCuenta(Double montoTransferir, Integer idOrigen, Integer idDestino) {
+	public boolean transferirDineroAOtraCuenta(Double montoTransferir, Integer idOrigen, Integer idDestino) {
 		Cuenta cuentaOrigen = buscarCuenta(idOrigen);
 		Cuenta cuentaDestino = buscarCuenta(idDestino);
-		if (cuentaDestino != null &&
-			cuentaOrigen.getSaldoPesos()>= montoTransferir) {
-			cuentaOrigen.extraerDineroDeCuenta(montoTransferir);
-			cuentaDestino.ingresarDineroEnCuenta(montoTransferir);
+		if (verificarSaldo(montoTransferir, cuentaOrigen) == true && cuentaDestino != null && cuentaOrigen != null) {
+		cuentaOrigen.restarDinero(montoTransferir);
+		cuentaDestino.sumarDinero(montoTransferir);
+			return true;
+			}
+		return false;
 	}
+
+	private boolean verificarSaldo(Double montoTransferir, Cuenta cuentaOrigen) {
+		if(cuentaOrigen.getSaldoPesos()>= montoTransferir) {
+			return true;
+		}
+		return false;
+	}
+
+	public void ingresarDineroEncuenta(Cuenta cuentaBuscada, Double dineroAIngresar) {
+		cuentaBuscada.setSaldoPesos(dineroAIngresar);
+		
+	}
+
+	public void retirarDinero(Integer id, Double montoARetirar) {
+		Cuenta cuentaBuscada = buscarCuenta(id);
+	if(cuentaBuscada != null && verificarSaldo(montoARetirar, cuentaBuscada) == true) {
+		cuentaBuscada.restarDinero(montoARetirar);
+	}
+	}
+
 	
-	}
 
 }
