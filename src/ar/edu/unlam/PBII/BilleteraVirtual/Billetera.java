@@ -10,9 +10,12 @@ public class Billetera {
 		cuentas = new HashSet<Cuenta>();
 	}
 
-	public void agregarCuenta(Cuenta cuenta) {
+	public boolean agregarCuenta(Cuenta cuenta) {
+		if(!cuentas.contains(cuenta)) {
 		cuentas.add(cuenta);
-		
+		return true;
+		}
+		return false;
 	}
 
 	public Cuenta buscarCuenta(Integer id) {
@@ -23,7 +26,16 @@ public class Billetera {
 		}
 		return null;
 	}
+
+	public void transferirDineroAOtraCuenta(Double montoTransferir, Integer idOrigen, Integer idDestino) {
+		Cuenta cuentaOrigen = buscarCuenta(idOrigen);
+		Cuenta cuentaDestino = buscarCuenta(idDestino);
+		if (cuentaDestino != null &&
+			cuentaOrigen.getSaldoPesos()>= montoTransferir) {
+			cuentaOrigen.extraerDineroDeCuenta(montoTransferir);
+			cuentaDestino.ingresarDineroEnCuenta(montoTransferir);
+	}
 	
-	
+	}
 
 }

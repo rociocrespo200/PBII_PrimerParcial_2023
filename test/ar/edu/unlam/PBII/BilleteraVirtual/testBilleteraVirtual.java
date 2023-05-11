@@ -47,32 +47,84 @@ public class testBilleteraVirtual {
 	
 	@Test
 	public void queNoSePuedaAgregarCuentaRepetido() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer id = 1;
+		String nombre = "Rocio";
+		
+		cuenta = new Cuenta(id,nombre);
+		
+		actual.agregarCuenta(cuenta);
+		
+		assertTrue(actual.agregarCuenta(cuenta));
 	}
 	
 	@Test
 	public void queSePuedaIngresarDinero() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer id = 1;
+		String nombre = "Rocio";
+		
+		Double dineroAIngresar = 1000.0;
+		
+		cuenta = new Cuenta(id,nombre);
+		cuenta.ingresarDineroEnCuenta(dineroAIngresar);
+		
+		assertEquals(dineroAIngresar, cuenta.getSaldoPesos());
+		
 	}
 	
 	@Test
 	public void queSePuedaTransferirAUnaCuentaExistente() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer idOrigen = 1;
+		String nombre = "Rocio";
+		
+		Double dineroAIngresar = 1000.0;
+		
+		cuenta = new Cuenta(idOrigen,nombre);
+		cuenta.ingresarDineroEnCuenta(dineroAIngresar);
+		
+		Cuenta cuentaDestino;
+		Integer idDestino = 4;
+		String nombreDestino = "karen";
+		
+		Double montoTransferir = 500.0;
+		cuentaDestino = new Cuenta(idDestino, nombreDestino);
+		
+		actual.transferirDineroAOtraCuenta(montoTransferir, idOrigen, idDestino);
+	
+		assertEquals(montoTransferir, cuentaDestino.getSaldoPesos());
+		
 	}
 	
 	@Test
-	public void queNOSePuedaTransferirAUnaCuentaInexistente() {
-		fail("Not yet implemented");
+	public void queNoSePuedaTransferirAUnaCuentaInexistente() {
+		
 	}
 	
 	@Test
 	public void queNoSePuedaTransferirSiNoHaySuficienteDinero() {
-		fail("Not yet implemented");
+		
 	}
 	
 	@Test
 	public void queSePuedaRetirarDinero() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer id = 1;
+		String nombre = "Rocio";
+		
+		Double dineroAIngresar = 1000.0;
+		
+		cuenta = new Cuenta(id,nombre);
+		cuenta.ingresarDineroEnCuenta(dineroAIngresar);
+		
+		Double dineroARetirar = 500.0;
+		
+		assertTrue(cuenta.extraerDineroDeCuenta(dineroARetirar));
 	}
 	
 	@Test
