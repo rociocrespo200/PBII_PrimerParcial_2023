@@ -164,42 +164,171 @@ public class testBilleteraVirtual {
 		actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
 		
 		Double montoARetirar = 200.0, montoEsperado = 800.0;
-		actual.retirarDinero(id, montoARetirar);
 		
 		Cuenta cuentaBuscada= actual.buscarCuenta(id);
 		
+		assertTrue(actual.retirarDinero(id, montoARetirar));
 		assertEquals(montoEsperado, cuentaBuscada.getSaldoPesos());
 		
 	}
 	
 	@Test
 	public void queNOSePuedaRetirarDineroSiNoHaySuficienteDinero() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer id = 1;
+		String nombre = "Rocio";
+		
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		Double dineroAIngresar = 1000.0;
+		actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
+		
+		Double montoARetirar = 1200.0;
+		actual.retirarDinero(id, montoARetirar);
+		
+		
+		assertFalse(actual.retirarDinero(id, montoARetirar));
 	}
 	
 	@Test
 	public void queSePuedaSolicitarUnPrestamoEnTresCuotas() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 100000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo3Cuotas(cuentaBuscada, montoSolicitado);
+		
+		actual.solicitarPrestamo(id, prestamo);
+		
+		assertEquals(montoSolicitado, cuentaBuscada.getSaldoPesos());
 	}
 	
 	@Test
 	public void queSePuedaSolicitarUnPrestamoEnSeisCuotas() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 100000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo6Cuotas(cuentaBuscada, montoSolicitado);
+		
+		actual.solicitarPrestamo(id, prestamo);
+		
+		assertEquals(montoSolicitado, cuentaBuscada.getSaldoPesos());
 	}
 	
 	@Test
 	public void queSePuedaSolicitarUnPrestamoEnDoceCuotas() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 100000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo12Cuotas(cuentaBuscada, montoSolicitado);
+		
+		actual.solicitarPrestamo(id, prestamo);
+		
+		assertEquals(montoSolicitado, cuentaBuscada.getSaldoPesos());
+	}
+	
+	@Test
+	public void queSeCreeenLasCuotasParaPresta3Cuotas() {
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 100000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo3Cuotas(cuentaBuscada, montoSolicitado);
+		
+		actual.solicitarPrestamo(id, prestamo);
+		
+		assertEquals(3, cuentaBuscada.getPrestamo().cuotas.size());
+	}
+	
+	@Test
+	public void queSeCreeenLasCuotasParaPresta6Cuotas() {
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 100000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo6Cuotas(cuentaBuscada, montoSolicitado);
+		
+		actual.solicitarPrestamo(id, prestamo);
+		
+		assertEquals(6, cuentaBuscada.getPrestamo().cuotas.size());
+	}
+	
+	@Test
+	public void queSeCreeenLasCuotasParaPresta12Cuotas() {
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 100000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo12Cuotas(cuentaBuscada, montoSolicitado);
+		
+		actual.solicitarPrestamo(id, prestamo);
+		
+		assertEquals(12, cuentaBuscada.getPrestamo().cuotas.size());
 	}
 	
 	@Test
 	public void queNOSePuedaSacarUnPrestamoMenorA30000() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 20000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo3Cuotas(cuentaBuscada, montoSolicitado);
+		
+		assertFalse(actual.solicitarPrestamo(id, prestamo));
 	}
 	
 	@Test
 	public void queNOSePuedaSacarUnPrestamoMayorA100000() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitado = 200000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo3Cuotas(cuentaBuscada, montoSolicitado);
+		
+		assertFalse(actual.solicitarPrestamo(id, prestamo));
 	}
 
 	

@@ -47,13 +47,34 @@ public class Billetera {
 		
 	}
 
-	public void retirarDinero(Integer id, Double montoARetirar) {
+	public boolean retirarDinero(Integer id, Double montoARetirar) {
 		Cuenta cuentaBuscada = buscarCuenta(id);
-	if(cuentaBuscada != null && verificarSaldo(montoARetirar, cuentaBuscada) == true) {
-		cuentaBuscada.restarDinero(montoARetirar);
-	}
+		if(cuentaBuscada != null && verificarSaldo(montoARetirar, cuentaBuscada) == true) {
+			cuentaBuscada.restarDinero(montoARetirar);
+			return true;
+		}
+	return false;
 	}
 
+	public boolean solicitarPrestamo(Integer id, Prestamo prestamo) {
+		Cuenta cuentaBuscada = buscarCuenta(id);
+		if(cuentaBuscada != null && prestamo.getValorSolicitado() >= 30000.0 && prestamo.getValorSolicitado() <= 100000.0) {
+			cuentaBuscada.solicitarPrestamo(prestamo);
+			return true;
+		}
+		return false;
+	}
+
+	public HashSet<Cuenta> getCuentas() {
+		return cuentas;
+	}
+
+	public void setCuentas(HashSet<Cuenta> cuentas) {
+		this.cuentas = cuentas;
+	}
+
+	
+	
 	
 
 }

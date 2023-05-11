@@ -22,6 +22,11 @@ public class Cuenta {
 	public void sumarDinero(Double monto) {
 		 saldoPesos += monto;
 	}
+	
+	public void solicitarPrestamo(Prestamo prestamo) {
+		this.prestamo = prestamo;
+		
+	}
 
 	public Integer getId() {
 		return id;
@@ -87,6 +92,7 @@ public class Cuenta {
 			return false;
 		return true;
 	}
+
 
 
 	
