@@ -246,7 +246,7 @@ public class testBilleteraVirtual {
 	}
 	
 	@Test
-	public void queSeCreeenLasCuotasParaPresta3Cuotas() {
+	public void queSeCreeenLasCuotasParaPrestamo3Cuotas() {
 		Billetera actual = new Billetera();
 		Cuenta cuenta, cuentaBuscada;
 		Integer id = 1;
@@ -264,7 +264,7 @@ public class testBilleteraVirtual {
 	}
 	
 	@Test
-	public void queSeCreeenLasCuotasParaPresta6Cuotas() {
+	public void queSeCreeenLasCuotasParaPrestamo6Cuotas() {
 		Billetera actual = new Billetera();
 		Cuenta cuenta, cuentaBuscada;
 		Integer id = 1;
@@ -282,7 +282,7 @@ public class testBilleteraVirtual {
 	}
 	
 	@Test
-	public void queSeCreeenLasCuotasParaPresta12Cuotas() {
+	public void queSeCreeenLasCuotasParaPrestamo12Cuotas() {
 		Billetera actual = new Billetera();
 		Cuenta cuenta, cuentaBuscada;
 		Integer id = 1;
