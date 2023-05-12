@@ -334,8 +334,22 @@ public class testBilleteraVirtual {
 	
 	@Test
 	public void queNOSePuedaRealizarDosPrestamosALaVez() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Matias";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		Double montoSolicitadoDelPrimerPrestamo = 50000.0;
+		Double montoSolicitadoDelSegundoPrestamo = 60000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamoUno = new Prestamo3Cuotas(cuentaBuscada, montoSolicitadoDelPrimerPrestamo);
+		Prestamo prestamoDos = new Prestamo3Cuotas(cuentaBuscada, montoSolicitadoDelSegundoPrestamo);
+		
+		assertFalse(actual.solicitarPrestamo(id, prestamoDos));
 	}
+
 
 	
 	@Test
@@ -346,23 +360,97 @@ public class testBilleteraVirtual {
 	
 	@Test
 	public void queSePuedaPagarCuotaDePrestamo() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		//Double dineroAIngresar = 80000.0;
+		//actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
+		
+		Double montoSolicitado = 60000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		
+		Prestamo prestamo = new Prestamo3Cuotas(cuentaBuscada, montoSolicitado);
+		actual.solicitarPrestamo(id, prestamo);
+		
+		Integer idCuota = 1;
+		actual.pagarCuotaPrestamo(cuentaBuscada,idCuota );
+		
+		Double valorEsperado = 35000.0;
+		
+		assertEquals(valorEsperado, cuentaBuscada.getSaldoPesos());
 	}
 
 	
 	@Test
 	public void queNOSePuedaPagarCuotaDePrestamoSiNoHaySuficienteDinero() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta, cuentaBuscada;
+		Integer id = 1;
+		String nombre = "Rocio";
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		
+		//Double dineroAIngresar = 80000.0;
+		//actual.ingresarDineroEncuenta(cuenta, dineroAIngresar);
+		
+		Double montoSolicitado = 60000.0;
+		cuentaBuscada = actual.buscarCuenta(id);
+		Prestamo prestamo = new Prestamo3Cuotas(cuentaBuscada, montoSolicitado);
+		actual.solicitarPrestamo(id, prestamo);
+		actual.retirarDinero(id, montoSolicitado);
+		
+		Integer idCuota = 1;
+		actual.pagarCuotaPrestamo(cuentaBuscada,idCuota );
+		
+		Double valorEsperado = 0.0;
+		
+		assertEquals(valorEsperado, cuentaBuscada.getSaldoPesos());
 	}
 	
 	@Test
 	public void queSePuedaComprarDolares() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer id = 1;
+		String nombre = "Rocio";
+		
+		Double dineroAIngresar = 30000.0;
+		
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		Cuenta cuentaBuscada = actual.buscarCuenta(id);
+		actual.ingresarDineroEncuenta(cuentaBuscada, dineroAIngresar);
+		Double montoAConvertirEnPesos = 10000.0;
+		actual.comprarDolares(cuentaBuscada, montoAConvertirEnPesos);
+		
+		Double valorEsperado = 20.0;
+		
+		assertEquals(valorEsperado, cuentaBuscada.getSaldoDolares());
 	}
 	
 	@Test
 	public void queNOSePuedaComprarDolaresSiNoHaySuficienteDinero() {
-		fail("Not yet implemented");
+		Billetera actual = new Billetera();
+		Cuenta cuenta;
+		Integer id = 1;
+		String nombre = "Rocio";
+		
+		Double dineroAIngresar = 350.0;
+		
+		cuenta = new Cuenta(id,nombre);
+		actual.agregarCuenta(cuenta);
+		Cuenta cuentaBuscada = actual.buscarCuenta(id);
+		actual.ingresarDineroEncuenta(cuentaBuscada, dineroAIngresar);
+		Double montoAConvertirEnPesos = 10000.0;
+		actual.comprarDolares(cuentaBuscada, montoAConvertirEnPesos);
+		
+		Double valorEsperado = 0.0;
+		
+		assertEquals(valorEsperado, cuentaBuscada.getSaldoDolares());
 	}
 
 
