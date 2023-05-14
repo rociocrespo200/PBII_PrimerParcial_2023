@@ -77,10 +77,13 @@ public class Prestamo {
 	public void setCuotas(HashSet<Cuota> cuotas) {
 		this.cuotas = cuotas;
 	}
-	
-	
-	
-	
-	
 
+
+	@Override
+	public String toString() {
+		return "Prestamo [cuenta=" + cuenta + ", valorSolicitado=" + valorSolicitado + ", interesTotal=" + interesTotal
+				+ ", valorFinalPagar=" + valorFinalPagar + ", cuotas=" + cuotas + "]";
+	}
+	
+	
 }

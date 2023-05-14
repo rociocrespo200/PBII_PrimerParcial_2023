@@ -78,7 +78,7 @@ public class Billetera {
 	public boolean solicitarPrestamo(Integer id, Prestamo prestamo) {
 		Cuenta cuentaBuscada = buscarCuenta(id);
 		if (cuentaBuscada != null && prestamo.getValorSolicitado() >= 30000.0
-				&& prestamo.getValorSolicitado() <= 100000.0) {
+				&& prestamo.getValorSolicitado() <= 100000.0 && cuentaBuscada.getPrestamo() == null) {
 			cuentaBuscada.solicitarPrestamo(prestamo);
 			return true;
 		}
@@ -101,6 +101,13 @@ public class Billetera {
 			cuentaBuscada.setSaldoDolares(convertir);
 		}
 
+	}
+
+	public String obtenerResumenDePrestamo(Cuenta cuenta) {
+		String resultado = cuenta.getPrestamo().toString() + cuenta.getPrestamo().getCuotas().toString();
+		return resultado;
+
+		
 	}
 
 }

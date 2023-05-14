@@ -60,8 +60,11 @@ public class Cuota {
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Cuota [id=" + id + ", valor=" + valor + ", estaPagada=" + estaPagada + "]";
+	}
+
 
 }
